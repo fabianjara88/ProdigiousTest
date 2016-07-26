@@ -4,8 +4,6 @@ using ProdigiousTest.Entities.DataMapping.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
 {
@@ -35,10 +33,10 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
                 product.ListPrice = productDto.ListPrice;
                 product.Size = productDto.Size;
                 product.Weight = productDto.Weight ?? 0;
-                product.ProductCategoryID = productDto.ProductCategoryID ?? null;
-                product.ProductModelID = productDto.ProductModelID ?? null;
+                product.ProductCategoryID = productDto.ProductCategoryID;
+                product.ProductModelID = productDto.ProductModelID;
                 product.SellStartDate = productDto.SellStartDate;
-                product.DiscontinuedDate = productDto.DiscontinuedDate ?? null;
+                product.DiscontinuedDate = productDto.DiscontinuedDate;
                 product.ThumbNailPhoto = productDto.ThumbNailPhoto;
                 product.rowguid = productDto.rowguid;
                 product.ModifiedDate = DateTime.Now;
@@ -78,10 +76,10 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
             product.ListPrice = productDto.ListPrice;
             product.Size = productDto.Size;
             product.Weight = productDto.Weight ?? 0;
-            product.ProductCategoryID = productDto.ProductCategoryID ?? null;
-            product.ProductModelID = productDto.ProductModelID ?? null;
+            product.ProductCategoryID = productDto.ProductCategoryID;
+            product.ProductModelID = productDto.ProductModelID;
             product.SellStartDate = productDto.SellStartDate;
-            product.DiscontinuedDate = productDto.DiscontinuedDate ?? null;
+            product.DiscontinuedDate = productDto.DiscontinuedDate;
             product.ThumbNailPhoto = productDto.ThumbNailPhoto;
             product.rowguid = productDto.rowguid;
             product.ModifiedDate = DateTime.Now;
@@ -91,7 +89,7 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
 
         private DataAccess.Product GetFromProduct(int productId)
         {
-            return _context.Product.FirstOrDefault(r => r.ProductID == productId); ;
+            return _context.Product.FirstOrDefault(r => r.ProductID == productId);
         }
     }
 }

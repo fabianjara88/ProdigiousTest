@@ -22,7 +22,7 @@ namespace ProdigiousTest.Bridge
 
         public ProductDto GetProductById(int productId)
         {
-            ProductDto productDto = null;
+            ProductDto productDto;
 
             try
             {
@@ -42,7 +42,7 @@ namespace ProdigiousTest.Bridge
 
         public List<ProductDto> GetProducts()
         {
-            List<ProductDto> productsDto = new List<ProductDto>();
+            List<ProductDto> productsDto;
 
             try
             {
@@ -69,7 +69,7 @@ namespace ProdigiousTest.Bridge
                     HttpResponseMessage response = client.PostAsync(_urlScheme + UrlSchemeSpecificPath, new StringContent(JsonConvert.SerializeObject(productDto), Encoding.UTF8, "application/json")).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        object content = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                        JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
                     }
                 }
             }

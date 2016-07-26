@@ -1,11 +1,8 @@
 ﻿using ProdigiousTest.DataAccess;
 using ProdigiousTest.Entities.DataFacade.Product;
 using ProdigiousTest.Entities.DataMapping.Product;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
 {

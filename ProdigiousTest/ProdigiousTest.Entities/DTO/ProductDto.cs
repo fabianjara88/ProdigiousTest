@@ -1,9 +1,8 @@
-using ProdigiousTest.DataAccess;
 using System;
 
 namespace ProdigiousTest.Entities
 {
-    public partial class ProductDto
+    public class ProductDto
     {
         public int ProductID { get; set; }
 

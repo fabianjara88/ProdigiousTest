@@ -42,7 +42,7 @@ namespace ProdigiousTest.Controllers
 
             if (productDto == null)
             {
-                string message = string.Format("Product id = {0} not found", id);
+                string message = $"Product id = {id} not found";
                 responseMessage = Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
             }
             else
@@ -60,14 +60,7 @@ namespace ProdigiousTest.Controllers
 
             if (ModelState.IsValid)
             {
-                if (productDto.Editing)
-                {
-                    response = UpdateProduct(productDto);
-                }
-                else
-                {
-                    response = CreateProduct(productDto);
-                }
+                response = productDto.Editing ? UpdateProduct(productDto) : CreateProduct(productDto);
             }
             else
             {

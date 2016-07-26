@@ -1,17 +1,12 @@
 ﻿using ProdigiousTest.Entities.DataMapping.Product;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProdigiousTest.DataAccess;
 
 namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
 {
     public class ProductMapping : IProductMapping
     {
-        public readonly IProductCategoryMapping _productCategoryMapping;
-        public readonly IProductModelMapping _productModelMapping;
+        private readonly IProductCategoryMapping _productCategoryMapping;
+        private readonly IProductModelMapping _productModelMapping;
         public ProductMapping(IProductCategoryMapping productCategoryMapping, IProductModelMapping productModelMapping)
         {
             _productCategoryMapping = productCategoryMapping;
@@ -29,10 +24,10 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 ListPrice = product.ListPrice,
                 Size = product.Size,
                 Weight = product.Weight ?? 0,
-                ProductCategoryID = product.ProductCategoryID ?? null,
-                ProductModelID = product.ProductModelID ?? null,
+                ProductCategoryID = product.ProductCategoryID,
+                ProductModelID = product.ProductModelID,
                 SellStartDate = product.SellStartDate,
-                DiscontinuedDate = product.DiscontinuedDate ?? null,
+                DiscontinuedDate = product.DiscontinuedDate,
                 ThumbNailPhoto = product.ThumbNailPhoto,
                 rowguid = product.rowguid,
                 ModifiedDate = product.ModifiedDate,
@@ -79,10 +74,10 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 ListPrice = productDto.ListPrice,
                 Size = productDto.Size,
                 Weight = productDto.Weight ?? 0,
-                ProductCategoryID = productDto.ProductCategoryID ?? null,
-                ProductModelID = productDto.ProductModelID ?? null,
+                ProductCategoryID = productDto.ProductCategoryID,
+                ProductModelID = productDto.ProductModelID,
                 SellStartDate = productDto.SellStartDate,
-                DiscontinuedDate = productDto.DiscontinuedDate ?? null,
+                DiscontinuedDate = productDto.DiscontinuedDate,
                 ThumbNailPhoto = productDto.ThumbNailPhoto,
                 rowguid = productDto.rowguid,
                 ModifiedDate = productDto.ModifiedDate,

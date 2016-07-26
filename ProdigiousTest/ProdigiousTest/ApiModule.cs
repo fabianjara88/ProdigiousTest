@@ -1,5 +1,4 @@
-﻿using System;
-using Ninject.Modules;
+﻿using Ninject.Modules;
 using ProdigiousTest.Entities.DataMapping.Product;
 using ProdigiousTest.Entities.DataMapping.Implementation.Product;
 using ProdigiousTest.Entities.DataFacade.Product;

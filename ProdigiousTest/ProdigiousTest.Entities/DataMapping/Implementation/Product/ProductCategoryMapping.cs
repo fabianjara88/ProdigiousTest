@@ -1,5 +1,4 @@
 ﻿using ProdigiousTest.Entities.DataMapping.Product;
-using System;
 using System.Collections.Generic;
 using ProdigiousTest.DataAccess;
 
@@ -50,7 +49,7 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 Name = productCategoryDto.Name,
                 ModifiedDate = productCategoryDto.ModifiedDate,
                 rowguid = productCategoryDto.rowguid,
-                ParentProductCategoryID = productCategoryDto.ParentProductCategoryID ?? null
+                ParentProductCategoryID = productCategoryDto.ParentProductCategoryID
             };
 
             return productCategory;

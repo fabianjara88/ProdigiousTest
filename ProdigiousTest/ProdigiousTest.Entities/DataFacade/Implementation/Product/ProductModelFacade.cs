@@ -1,7 +1,4 @@
-﻿
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ProdigiousTest.Entities.DataFacade.Product;
 using ProdigiousTest.DataAccess;
 using ProdigiousTest.Entities.DataMapping.Product;

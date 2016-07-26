@@ -1,10 +1,9 @@
-using ProdigiousTest.DataAccess;
 using System;
 using System.Collections.Generic;
 
 namespace ProdigiousTest.Entities
 {
-    public partial class ProductModelDto
+    public class ProductModelDto
     {
         public int ProductModelID { get; set; }
 
