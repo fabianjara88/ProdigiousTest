@@ -37,5 +37,24 @@ namespace ProdigiousTest.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public HttpResponseMessage GetCategoryById(int id)
+        {
+            HttpResponseMessage responseMessage;
+            ProductModelDto productModelDto = _productModel.GetProductModelById(id);
+
+            if (productModelDto == null)
+            {
+                string message = $"Model id = {id} not found";
+                responseMessage = Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
+            }
+            else
+            {
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, productModelDto);
+            }
+            return responseMessage;
+        }
     }
 }

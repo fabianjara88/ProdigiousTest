@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProdigiousTest.Bridge.ProductContracts
 {
-    interface IProduct
+    public interface IProduct
     {
         #region Contracts
 

@@ -1,4 +1,5 @@
-﻿using ProdigiousTest.Bridge.ProductContracts;
+﻿using System;
+using ProdigiousTest.Bridge.ProductContracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProdigiousTest.Entities;
@@ -8,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace ProdigiousTest.Bridge
 {
-    class ProductModel : IProductModel
+    public class ProductModel : IProductModel
     {
         private readonly string _urlScheme = ConfigurationManager.AppSettings["APIURI"];
 
@@ -26,6 +27,26 @@ namespace ProdigiousTest.Bridge
                 List<ProductModelDto> productModels = Task.Factory.StartNew(() => JsonConvert.DeserializeObject<List<ProductModelDto>>(response.Result)).Result;
                 return productModels;
             }
+        }
+
+        public ProductModelDto GetProductModelById(int productId)
+        {
+            ProductModelDto productModelDto;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    Task<string> response = client.GetStringAsync(_urlScheme + UrlSchemeSpecificPath + "/" + productId + "/");
+                    productModelDto = Task.Factory.StartNew(() => JsonConvert.DeserializeObject<ProductModelDto>(response.Result)).Result;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return productModelDto;
         }
     }
 }

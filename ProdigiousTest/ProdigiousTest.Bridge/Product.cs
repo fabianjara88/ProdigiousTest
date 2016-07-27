@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace ProdigiousTest.Bridge
 {
-    class Product : IProduct
+    public class Product : IProduct
     {
         private readonly string _urlScheme = ConfigurationManager.AppSettings["APIURI"];
 

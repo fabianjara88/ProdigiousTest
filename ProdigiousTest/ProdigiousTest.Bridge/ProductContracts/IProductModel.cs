@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace ProdigiousTest.Bridge.ProductContracts
 {
-    interface IProductModel
+    public interface IProductModel
     {
         List<ProductModelDto> GetProductModels();
+
+        ProductModelDto GetProductModelById(int productModelId);
     }
 }

@@ -20,5 +20,11 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
             List<ProductCategory> productCategories = _context.ProductCategory.ToList();
             return _categoryMapping.MapDbToDtosObject(productCategories);
         }
+
+        public ProductCategoryDto GetProductCategoryById(int productCategoryId)
+        {
+            ProductCategory productCategory = _context.ProductCategory.SingleOrDefault(r => r.ProductCategoryID == productCategoryId);
+            return _categoryMapping.MapDbToDtoObject(productCategory);
+        }
     }
 }
