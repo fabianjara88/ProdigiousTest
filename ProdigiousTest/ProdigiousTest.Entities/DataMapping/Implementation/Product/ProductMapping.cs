@@ -31,8 +31,8 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 ThumbNailPhoto = product.ThumbNailPhoto,
                 rowguid = product.rowguid,
                 ModifiedDate = product.ModifiedDate,
-                ProductCategory = _productCategoryMapping.MapDbToDtoObject(product.ProductCategory),
-                ProductModel = _productModelMapping.MapDbToDtoObject(product.ProductModel)
+                ProductCategory = product.ProductCategory != null ? _productCategoryMapping.MapDbToDtoObject(product.ProductCategory): null,
+                ProductModel = product.ProductModel != null ? _productModelMapping.MapDbToDtoObject(product.ProductModel): null
             };
 
             return productDto;
@@ -81,8 +81,8 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 ThumbNailPhoto = productDto.ThumbNailPhoto,
                 rowguid = productDto.rowguid,
                 ModifiedDate = productDto.ModifiedDate,
-                ProductCategory = _productCategoryMapping.MapDtoToDbObject(productDto.ProductCategory),
-                ProductModel = _productModelMapping.MapDtoToDbObject(productDto.ProductModel)
+                ProductCategory = productDto.ProductCategory != null ? _productCategoryMapping.MapDtoToDbObject(productDto.ProductCategory): null,
+                ProductModel = productDto.ProductModel!= null ? _productModelMapping.MapDtoToDbObject(productDto.ProductModel): null
             };
 
             return product;
