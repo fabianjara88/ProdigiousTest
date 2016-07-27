@@ -15,6 +15,7 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
         {
             _modelMapping = modelMapping;
         }
+
         public List<ProductModelDto> GetProductModels()
         {
             List<ProductModel> productModels = _context.ProductModel.ToList();
@@ -24,7 +25,10 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
         public ProductModelDto GetProductModelById(int productModelId)
         {
             ProductModel productModel = _context.ProductModel.SingleOrDefault(r => r.ProductModelID == productModelId);
-            return _modelMapping.MapDbToDtoObject(productModel);
+
+            if(productModel != null)
+                return _modelMapping.MapDbToDtoObject(productModel);
+            return null;
         }
     }
 }

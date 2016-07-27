@@ -16,7 +16,7 @@ namespace ProdigiousTest.Bridge
 
         #region Constants
 
-        const string UrlSchemeSpecificPath = "Product/Product";
+        const string UrlSchemeSpecificPath = "Product";
 
         #endregion
 

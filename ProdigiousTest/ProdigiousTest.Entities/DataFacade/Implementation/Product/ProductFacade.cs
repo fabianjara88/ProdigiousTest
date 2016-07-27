@@ -56,7 +56,10 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
         public ProductDto GetProductById(int productId)
         {
             DataAccess.Product product = GetFromProduct(productId);
-            return _productMapping.MapDbToDtoObject(product);
+
+            if(product != null)
+                return _productMapping.MapDbToDtoObject(product);
+            return null;
         }
 
         public List<ProductDto> GetProducts()
