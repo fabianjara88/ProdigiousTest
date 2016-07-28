@@ -7,7 +7,7 @@ namespace ProdigiousTest.Bridge.ProductContracts
     {
         #region Contracts
 
-        void SetProduct(ProductDto productDto);
+        int SetProduct(ProductDto productDto);
         ProductDto GetProductById(int productId);
         List<ProductDto> GetProducts();
 

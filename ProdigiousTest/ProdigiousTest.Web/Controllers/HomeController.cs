@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using ProdigiousTest.Bridge.ProductContracts;
 using ProdigiousTest.Entities;
@@ -35,18 +37,116 @@ namespace ProdigiousTest.Web.Controllers
             return View(productListModel);
         }
 
-        public ActionResult About()
+        public ActionResult View(int productId)
         {
-            ViewBag.Message = "Your application description page.";
+            if (productId == 0)
+                RedirectToAction("index");
 
-            return View();
+            ProductDto productDto = _product.GetProductById(productId);
+
+            if(productDto != null)
+                RedirectToAction("index");
+
+            ProductModel productModel = PrepareProductModel(productDto);
+
+            return View(productModel);
         }
 
-        public ActionResult Contact()
+        [HttpGet]
+        public ActionResult Create()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Create Product";
+            ProductModel productModel = new ProductModel();
+            var categories = _productCategory.GetProductCategories();
 
-            return View();
+            productModel.ProductModelList.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0"
+            });
+
+            foreach (var category in categories)
+            {
+                productModel.ProductCategoryList.Add(new SelectListItem
+                {
+                    Text = category.Name,
+                    Value = category.ProductCategoryID.ToString(),
+                    Selected = true
+                });
+            }
+
+            var models = _productModel.GetProductModels();
+
+            productModel.ProductCategoryList.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0",
+                Selected = true
+            });
+
+            foreach (var model in models)
+            {
+                productModel.ProductCategoryList.Add(new SelectListItem
+                {
+                    Text = model.Name,
+                    Value = model.ProductModelID.ToString()
+                });
+            }
+
+            return View(productModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ProductModel product, HttpPostedFileBase thumbNailPhotoPath)
+        {
+            if (ModelState.IsValid)
+            {
+                byte[] bytes = null;
+                string photoName = null;
+
+                if (thumbNailPhotoPath != null && thumbNailPhotoPath.ContentLength > 0)
+                {
+                    photoName = Path.GetFileName(thumbNailPhotoPath.FileName);
+
+
+
+                    string path = Path.Combine(Server.MapPath("~/Content/"), "bt_fb.png");
+
+                    //if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
+                    //    Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
+
+                    //thumbNailPhotoPath.SaveAs(path);
+
+                    bytes = System.IO.File.ReadAllBytes(path);
+
+                    //System.IO.File.Delete(path);
+                }
+
+                ProductDto productDto = new ProductDto
+                {
+                    DiscontinuedDate = product.DiscontinuedDate,
+                    Color = product.Color,
+                    ProductModelID = product.ProductModelID,
+                    ListPrice = product.ListPrice,
+                    Name = product.Name,
+                    ProductCategoryID = product.ProductCategoryID,
+                    ProductNumber = product.ProductNumber,
+                    SellEndDate = product.SellEndDate,
+                    SellStartDate = product.SellStartDate,
+                    Size = product.Size,
+                    StandardCost = product.StandardCost,
+                    ThumbNailPhoto = bytes,
+                    ThumbnailPhotoFileName = photoName,
+                    Weight = product.Weight
+                };
+
+                int productId = _product.SetProduct(productDto);
+
+                return RedirectToAction("View", "Home", new { productId = productId });
+            }
+
+            return RedirectToAction("Index");
         }
 
         private ProductModel PrepareProductModel(ProductDto productDto)

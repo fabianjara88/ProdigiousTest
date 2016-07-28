@@ -60,18 +60,22 @@ namespace ProdigiousTest.Bridge
             return productsDto;
         }
 
-        public void SetProduct(ProductDto productDto)
+        public int SetProduct(ProductDto productDto)
         {
             try
             {
+                int productId = 0;
+
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage response = client.PostAsync(_urlScheme + UrlSchemeSpecificPath, new StringContent(JsonConvert.SerializeObject(productDto), Encoding.UTF8, "application/json")).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                        productId = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
                     }
                 }
+
+                return productId;
             }
             catch (HttpRequestException ex)
             {

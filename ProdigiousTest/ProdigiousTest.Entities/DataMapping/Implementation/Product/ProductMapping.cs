@@ -79,10 +79,9 @@ namespace ProdigiousTest.Entities.DataMapping.Implementation.Product
                 SellStartDate = productDto.SellStartDate,
                 DiscontinuedDate = productDto.DiscontinuedDate,
                 ThumbNailPhoto = productDto.ThumbNailPhoto,
+                ThumbnailPhotoFileName = productDto.ThumbnailPhotoFileName,
                 rowguid = productDto.rowguid,
-                ModifiedDate = productDto.ModifiedDate,
-                ProductCategory = productDto.ProductCategory != null ? _productCategoryMapping.MapDtoToDbObject(productDto.ProductCategory): null,
-                ProductModel = productDto.ProductModel!= null ? _productModelMapping.MapDtoToDbObject(productDto.ProductModel): null
+                ModifiedDate = productDto.ModifiedDate
             };
 
             return product;

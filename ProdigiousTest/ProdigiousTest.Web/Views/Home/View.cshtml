@@ -1,0 +1,36 @@
+﻿@model ProdigiousTest.Web.Models.ProductModel
+<br/>
+<br/>
+<br />
+<div class="row">
+    <div class="col-md-9">
+
+        <div class="thumbnail">
+            @if (Model.ThumbNailPhoto != null)
+            {
+                var base64 = Convert.ToBase64String(Model.ThumbNailPhoto);
+                var imgSrc = $"data:image/gif;base64,{base64}";
+                <img class="img-responsive" src="@imgSrc" alt="">
+            }
+            
+            <div class="caption-full">
+                <h4 class="pull-right">$@Model.ListPrice</h4>
+                <h4>
+                    <a href="#">@Model.Name</a>
+                </h4>
+                @if (Model.ProductNumber != null)
+                {
+                    <p>Sku: @Model.ProductNumber</p>
+                }
+                @if (Model.Size != null)
+                {
+                    <p>Size: @Model.Size</p>
+                }
+                @if (Model.Weight != null)
+                {
+                    <p>Weight: @Model.Weight</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
