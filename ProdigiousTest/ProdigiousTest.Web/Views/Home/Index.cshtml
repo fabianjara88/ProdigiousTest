@@ -4,6 +4,10 @@
 }
 
 <div class="row">
+    <br/>
+    <p>@Html.ActionLink("Create Product", "Create", "Home", null, new {@class = "btn btn-default"})</p>
+    <br/>
+    <br />
     @foreach (var item in Model)
     {
         <div class="col-md-3">
@@ -28,7 +32,7 @@
             {
                 <p>Weight: @item.Weight</p>
             }
-            <p>@Html.ActionLink("View", "View", "Home", new { productId = item.ProductID},new {@class= "btn btn-default" })</p>
+            <p>@Html.ActionLink("View", "View", "Home", new {productId = item.ProductID}, new {@class = "btn btn-default"})</p>
         </div>
     }
 </div>
