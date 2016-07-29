@@ -160,16 +160,16 @@ namespace ProdigiousTest.Web.Controllers
             {
                 photoName = Path.GetFileName(thumbNailPhotoPath.FileName);
 
-                string path = Path.Combine(Server.MapPath("~/Content/"), "bt_fb.png");
+                string path = Path.Combine(Server.MapPath("~/Content/"), photoName);
 
-                //if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
-                //    Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
+                if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
+                    Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
 
-                //thumbNailPhotoPath.SaveAs(path);
+                thumbNailPhotoPath.SaveAs(path);
 
                 bytes = System.IO.File.ReadAllBytes(path);
 
-                //System.IO.File.Delete(path);
+                System.IO.File.Delete(path);
             }
 
             ProductDto productDto = new ProductDto
@@ -214,16 +214,16 @@ namespace ProdigiousTest.Web.Controllers
                 {
                     photoName = Path.GetFileName(thumbNailPhotoPath.FileName);
 
-                    string path = Path.Combine(Server.MapPath("~/Content/"), "bt_fb.png");
+                    string path = Path.Combine(Server.MapPath("~/Content/"), photoName);
 
-                    //if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
-                    //    Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
+                    if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
+                        Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
 
-                    //thumbNailPhotoPath.SaveAs(path);
+                    thumbNailPhotoPath.SaveAs(path);
 
                     bytes = System.IO.File.ReadAllBytes(path);
 
-                    //System.IO.File.Delete(path);
+                    System.IO.File.Delete(path);
                 }
 
                 ProductDto productDto = new ProductDto
