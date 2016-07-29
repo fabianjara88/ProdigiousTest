@@ -37,15 +37,16 @@ namespace ProdigiousTest.Web.Controllers
             return View(productListModel);
         }
 
+        [HttpGet]
         public ActionResult View(int productId)
         {
-            if (productId == 0)
-                RedirectToAction("index");
+            if (productId < 1)
+                return RedirectToAction("Index");
 
             ProductDto productDto = _product.GetProductById(productId);
 
-            if(productDto != null)
-                RedirectToAction("index");
+            if(productDto == null)
+                return RedirectToAction("Index");
 
             ProductModel productModel = PrepareProductModel(productDto);
 
@@ -62,7 +63,8 @@ namespace ProdigiousTest.Web.Controllers
             productModel.ProductModelList.Add(new SelectListItem
             {
                 Text = "None",
-                Value = "0"
+                Value = "0",
+                Selected = true
             });
 
             foreach (var category in categories)
@@ -70,8 +72,7 @@ namespace ProdigiousTest.Web.Controllers
                 productModel.ProductCategoryList.Add(new SelectListItem
                 {
                     Text = category.Name,
-                    Value = category.ProductCategoryID.ToString(),
-                    Selected = true
+                    Value = category.ProductCategoryID.ToString()
                 });
             }
 
@@ -96,6 +97,110 @@ namespace ProdigiousTest.Web.Controllers
             return View(productModel);
         }
 
+        [HttpGet]
+        public ActionResult Edit(int productId)
+        {
+            if (productId < 1)
+                return RedirectToAction("Index");
+
+            ViewBag.Message = "Edit Product";
+            var productDto = _product.GetProductById(productId);
+
+            if (productDto == null)
+                return RedirectToAction("Index");
+
+            ProductModel productModel = PrepareProductModel(productDto);
+            var categories = _productCategory.GetProductCategories();
+
+            productModel.ProductModelList.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0"
+            });
+
+            foreach (var category in categories)
+            {
+                productModel.ProductCategoryList.Add(new SelectListItem
+                {
+                    Text = category.Name,
+                    Value = category.ProductCategoryID.ToString(),
+                    Selected = category.ProductCategoryID == productModel.ProductCategoryID
+                });
+            }
+
+            var models = _productModel.GetProductModels();
+
+            productModel.ProductCategoryList.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0"
+            });
+
+            foreach (var model in models)
+            {
+                productModel.ProductCategoryList.Add(new SelectListItem
+                {
+                    Text = model.Name,
+                    Value = model.ProductModelID.ToString(),
+                    Selected = model.ProductModelID == productModel.ProductModelID
+                });
+            }
+
+            return View(productModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProductModel product, HttpPostedFileBase thumbNailPhotoPath)
+        {
+            byte[] bytes = null;
+            string photoName = null;
+
+            if (thumbNailPhotoPath != null && thumbNailPhotoPath.ContentLength > 0)
+            {
+                photoName = Path.GetFileName(thumbNailPhotoPath.FileName);
+
+                string path = Path.Combine(Server.MapPath("~/Content/"), "bt_fb.png");
+
+                //if (!Directory.Exists(Server.MapPath("~/Content/temp/")))
+                //    Directory.CreateDirectory(Server.MapPath("~/Content/temp/"));
+
+                //thumbNailPhotoPath.SaveAs(path);
+
+                bytes = System.IO.File.ReadAllBytes(path);
+
+                //System.IO.File.Delete(path);
+            }
+
+            ProductDto productDto = new ProductDto
+            {
+                ProductID = product.ProductID,
+                DiscontinuedDate = product.DiscontinuedDate,
+                Color = product.Color,
+                ProductModelID = product.ProductModelID == 0 ? null : product.ProductModelID,
+                ListPrice = product.ListPrice,
+                Name = product.Name,
+                ProductCategoryID = product.ProductCategoryID == 0 ? null : product.ProductCategoryID,
+                ProductNumber = product.ProductNumber,
+                SellEndDate = product.SellEndDate,
+                SellStartDate = product.SellStartDate,
+                Size = product.Size,
+                StandardCost = product.StandardCost,
+                Weight = product.Weight,
+                Editing = true
+            };
+
+            if (bytes != null)
+            {
+                productDto.ThumbNailPhoto = bytes;
+                productDto.ThumbnailPhotoFileName = photoName;
+            }
+
+            _product.SetProduct(productDto);
+
+            return RedirectToAction("View", "Home", new { productId = product.ProductID });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductModel product, HttpPostedFileBase thumbNailPhotoPath)
@@ -108,8 +213,6 @@ namespace ProdigiousTest.Web.Controllers
                 if (thumbNailPhotoPath != null && thumbNailPhotoPath.ContentLength > 0)
                 {
                     photoName = Path.GetFileName(thumbNailPhotoPath.FileName);
-
-
 
                     string path = Path.Combine(Server.MapPath("~/Content/"), "bt_fb.png");
 
@@ -127,10 +230,10 @@ namespace ProdigiousTest.Web.Controllers
                 {
                     DiscontinuedDate = product.DiscontinuedDate,
                     Color = product.Color,
-                    ProductModelID = product.ProductModelID,
+                    ProductModelID = product.ProductModelID == 0 ? null : product.ProductModelID,
                     ListPrice = product.ListPrice,
                     Name = product.Name,
-                    ProductCategoryID = product.ProductCategoryID,
+                    ProductCategoryID = product.ProductCategoryID == 0 ? null : product.ProductCategoryID,
                     ProductNumber = product.ProductNumber,
                     SellEndDate = product.SellEndDate,
                     SellStartDate = product.SellStartDate,
@@ -147,6 +250,20 @@ namespace ProdigiousTest.Web.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult IsValidProduct(string name, string productNumber, int productId)
+        {
+            ProductDto productDto = new ProductDto
+            {
+                Name = name,
+                ProductNumber = productNumber,
+                ProductID = productId
+            };
+
+            bool isValidProduct = _product.IsValidProduct(productDto);
+
+            return Json(isValidProduct, JsonRequestBehavior.AllowGet);
         }
 
         private ProductModel PrepareProductModel(ProductDto productDto)

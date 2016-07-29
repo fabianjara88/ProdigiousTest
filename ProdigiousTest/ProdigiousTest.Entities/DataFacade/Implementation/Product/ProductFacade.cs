@@ -49,8 +49,8 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
                 _context.Product.Add(product);
             }
 
-            int result = _context.SaveChanges();
-            return result;
+            _context.SaveChanges();
+            return product.ProductID;
         }
 
         public ProductDto GetProductById(int productId)
@@ -60,6 +60,19 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
             if(product != null)
                 return _productMapping.MapDbToDtoObject(product);
             return null;
+        }
+
+        public bool IsValidProduct(string name, string productNumber, int productId)
+        {
+            DataAccess.Product product =  _context.Product.FirstOrDefault(r => r.Name == name || r.ProductNumber == productNumber);
+
+            if (product == null)
+                return true;
+
+            if (product.ProductID != productId)
+                return false;
+
+            return true;
         }
 
         public List<ProductDto> GetProducts()
@@ -84,7 +97,6 @@ namespace ProdigiousTest.Entities.DataFacade.Implementation.Product
             product.SellStartDate = productDto.SellStartDate;
             product.DiscontinuedDate = productDto.DiscontinuedDate;
             product.ThumbNailPhoto = productDto.ThumbNailPhoto;
-            product.rowguid = productDto.rowguid;
             product.ModifiedDate = DateTime.Now;
 
             _context.SaveChanges();

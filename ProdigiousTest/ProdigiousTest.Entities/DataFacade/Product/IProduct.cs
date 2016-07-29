@@ -8,5 +8,6 @@ namespace ProdigiousTest.Entities.DataFacade.Product
         void UpdateProduct(ProductDto product);
         int CreateProduct(ProductDto productDto);
         ProductDto GetProductById(int productId);
+        bool IsValidProduct(string name, string productNumber, int productId);
     }
 }

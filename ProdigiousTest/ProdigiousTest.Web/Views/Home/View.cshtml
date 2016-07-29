@@ -12,7 +12,7 @@
                 var imgSrc = $"data:image/gif;base64,{base64}";
                 <img class="img-responsive" src="@imgSrc" alt="">
             }
-            
+
             <div class="caption-full">
                 <h4 class="pull-right">$@Model.ListPrice</h4>
                 <h4>
@@ -30,7 +30,33 @@
                 {
                     <p>Weight: @Model.Weight</p>
                 }
+
+                @if (Model.StandardCost != null)
+                {
+                    <p>Standard Cost: @Model.StandardCost</p>
+                }
+
+                @if (Model.ProductCategory != null)
+                {
+                    <p>Category: @Model.ProductCategory.Name</p>
+                }
+
+                @if (Model.ProductModelVar != null)
+                {
+                    <p>Category: @Model.ProductModelVar.Name</p>
+                }
+
+                @if (Model.SellEndDate.HasValue)
+                {
+                    <p>Sell End Date: @Model.SellEndDate.Value</p>
+                }
+
+                @if (Model.DiscontinuedDate.HasValue)
+                {
+                    <p>Sell End Date: @Model.DiscontinuedDate.Value</p>
+                }
             </div>
+            <p>@Html.ActionLink("Edit","Edit","home", new { productId = Model.ProductID }, new {@class = "btn btn-primary" })</p>
         </div>
     </div>
 </div>

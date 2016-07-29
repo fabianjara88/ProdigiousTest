@@ -82,5 +82,25 @@ namespace ProdigiousTest.Bridge
                 throw new Exception(ex.Message);
             }
         }
+
+        public bool IsValidProduct(ProductDto productDto)
+        {
+            bool isValidProduct;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    Task<string> response = client.GetStringAsync(_urlScheme + UrlSchemeSpecificPath + "/" + productDto.Name + "/" + productDto.ProductNumber + "/" + productDto.ProductID + "/");
+                    isValidProduct = Task.Factory.StartNew(() => JsonConvert.DeserializeObject<bool>(response.Result)).Result;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return isValidProduct;
+        }
     }
 }

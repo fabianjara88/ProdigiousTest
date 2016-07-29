@@ -10,6 +10,7 @@ namespace ProdigiousTest.Bridge.ProductContracts
         int SetProduct(ProductDto productDto);
         ProductDto GetProductById(int productId);
         List<ProductDto> GetProducts();
+        bool IsValidProduct(ProductDto productDto);
 
         #endregion
     }

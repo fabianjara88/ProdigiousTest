@@ -60,13 +60,21 @@ namespace ProdigiousTest.Controllers
 
             if (ModelState.IsValid)
             {
-                response = productDto.Editing ? UpdateProduct(productDto) : CreateProduct(productDto);
+                response = Request.CreateResponse(HttpStatusCode.Accepted, productDto.Editing ? UpdateProduct(productDto) : CreateProduct(productDto));
             }
             else
             {
                 response = Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            return response;
+        }
+
+        [HttpGet]
+        [Route("{name}/{productNumber}/{productId:int}")]
+        public HttpResponseMessage IsValidProduct(string name, string productNumber,  int productId)
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Accepted, _product.IsValidProduct(name, productNumber, productId));
             return response;
         }
 
